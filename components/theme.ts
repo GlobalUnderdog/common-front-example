@@ -24,7 +24,8 @@ interface AppColors extends GUColorTheme {
  * The basic properties comprising the theme of the app.
  *
  * GUThemeProps is related to the properties (not global styles) defined
- * at GUTheme. For example values like
+ * at GUTheme. For example values like colors, animations, font families,
+ * etc.
  */
 interface AppThemeProps extends GUThemeProps {
   readonly color: AppColors
@@ -33,7 +34,7 @@ interface AppThemeProps extends GUThemeProps {
   }
 }
 
-// Custom animation that will be consumed by the theme
+// Custom animation that will be consumed by Buttons when `prop.color === 'error'`
 const blink = keyframes`
   0% { background-color: red; }
   50% { background-color: white; }
@@ -49,6 +50,10 @@ export const theme = makeTheme<Theme>({
       darkest: '#800',
     },
   },
+  // We're not replacing the default style since we're extending
+  // the theme, in case had a more radical change at our extended Theme
+  // we would probably switch `replace` to true to avoid the default rules
+  // from overlapping the custom ones.
   button: {
     css: ({ animations, color }, props?: ButtonProps) => css`
       font-family: sans-serif;
